@@ -185,7 +185,7 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
           Center(
             child: Container(
               width: 311,
-              height: 141,
+              height: 166,
               decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
@@ -199,42 +199,44 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
                   borderRadius: const BorderRadius.all(Radius.circular(16))),
               child: Padding(
                 padding: const EdgeInsets.all(15.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 4,
-                    ),
-                    Text(
-                      '${widget.article.publishedAt}',
-                      style: const TextStyle(
-                          fontFamily: 'NunitoSans',
-                          color: Color(0xff2E0505),
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600),
-                    ),
-                    const SizedBox(
-                      height: 6,
-                    ),
-                    Text(
-                      '${widget.article.title}',
-                      style: const TextStyle(
-                          color: Color(0xff2E0505),
-                          fontSize: 15,
-                          fontWeight: FontWeight.w700),
-                    ),
-                    const SizedBox(
-                      height: 6,
-                    ),
-                    Text(
-                      '${widget.article.author}',
-                      style: const TextStyle(
-                          fontFamily: 'NunitoSans',
-                          color: Color(0xff2E0505),
-                          fontSize: 10,
-                          fontWeight: FontWeight.w800),
-                    )
-                  ],
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Text(
+                        '${widget.article.publishedAt}',
+                        style: const TextStyle(
+                            fontFamily: 'NunitoSans',
+                            color: Color(0xff2E0505),
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      const SizedBox(
+                        height: 6,
+                      ),
+                      Text(
+                        '${widget.article.title}',
+                        style: const TextStyle(
+                            color: Color(0xff2E0505),
+                            fontSize: 15,
+                            fontWeight: FontWeight.w700),
+                      ),
+                      const SizedBox(
+                        height: 6,
+                      ),
+                      Text(
+                        '${widget.article.author}',
+                        style: const TextStyle(
+                            fontFamily: 'NunitoSans',
+                            color: Color(0xff2E0505),
+                            fontSize: 10,
+                            fontWeight: FontWeight.w800),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
