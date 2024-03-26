@@ -8,9 +8,11 @@ class WidgetLastNew extends StatelessWidget {
       required this.text2,
       required this.image,
       required this.opacity,
-      required this.fun});
+      required this.fun,
+      required this.textAuthor});
   final String text1;
   final String text2;
+  final String textAuthor;
   final String image;
   final double opacity;
   final Function() fun;
@@ -25,7 +27,7 @@ class WidgetLastNew extends StatelessWidget {
         child: Stack(children: [
           Opacity(
             opacity: opacity,
-            child: Image.asset(
+            child: Image.network(
               image,
               width: 321,
               height: 240,
@@ -33,14 +35,15 @@ class WidgetLastNew extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 70,
+            top: 30,
             left: 15,
+            right: 40,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'by Ryan Browne',
-                  style: TextStyle(
+                Text(
+                  textAuthor,
+                  style: const TextStyle(
                       fontFamily: 'NunitoSans',
                       color: Color(0xffFFFFFF),
                       fontWeight: FontWeight.w800,
@@ -56,17 +59,13 @@ class WidgetLastNew extends StatelessWidget {
                 const SizedBox(
                   height: 22,
                 ),
-                Row(
-                  children: [
-                    Text(
-                      text2,
-                      style: const TextStyle(
-                          fontFamily: 'NunitoSans',
-                          color: Color(0xffFFFFFF),
-                          fontWeight: FontWeight.w600,
-                          fontSize: 10),
-                    ),
-                  ],
+                Text(
+                  text2,
+                  style: const TextStyle(
+                      fontFamily: 'NunitoSans',
+                      color: Color(0xffFFFFFF),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 10),
                 )
               ],
             ),
