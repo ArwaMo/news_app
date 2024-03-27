@@ -13,7 +13,7 @@ class GetNewsRepo {
       if (response.statusCode != 200) {
         return null;
       } else {
-        GatNewsModel? newsData = GatNewsModel.fromJson(response.data);
+        GatNewsModel newsData = GatNewsModel.fromJson(response.data);
 
         return newsData;
       }

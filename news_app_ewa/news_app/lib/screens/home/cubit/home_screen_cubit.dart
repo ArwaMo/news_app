@@ -8,7 +8,7 @@ part 'home_screen_state.dart';
 class HomeScreenCubit extends Cubit<HomeScreenState> {
   HomeScreenCubit() : super(HomeScreenInitial());
 
-  Future<void> getData() async {
+  getData() async {
     emit(HomeScreenLoading());
 
     GatNewsModel? newsData = await GetNewsRepo().getData();
