@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/data/get_data_model.dart';
 import 'package:news_app/repository/get_data_repo.dart';
 import 'package:news_app/screens/home/components/widget_bottom_navigation_bar.dart';
+import 'package:news_app/screens/home/cubit/home_screen_cubit.dart';
 import 'package:news_app/screens/notification/notification_screen.dart';
 import 'package:news_app/screens/widgets/widget_category.dart';
 import 'package:news_app/screens/home/components/widget_last_new.dart';
@@ -17,28 +19,28 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  GatNewsModel? newsData;
-
   @override
   void initState() {
     super.initState();
-    getData();
-  }
-
-  getData() async {
-    newsData = await GetNewsRepo().getData();
-    setState(() {});
+    context.read<HomeScreenCubit>().getData();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: newsData == null
-            ? const Center(
+        child: BlocBuilder<HomeScreenCubit, HomeScreenState>(
+          builder: (context, state) {
+            if (state is HomeScreenLoading) {
+              return const Center(
                 child: CircularProgressIndicator(),
-              )
-            : Padding(
+              );
+            } else if (state is HomeScreenInitial) {
+              return const Center(
+                child: Text('Initial State'),
+              );
+            } else if (state is HomeScreenSuccess) {
+              return Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Stack(children: [
                   SingleChildScrollView(
@@ -175,16 +177,19 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Row(
                             children: [
                               for (int i = 0;
-                                  i < newsData!.articles.length;
+                                  i < state.newsData.articles.length;
                                   i++)
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: WidgetLastNew(
                                     image:
-                                        newsData!.articles[i].urlToImage ?? '',
-                                    text1: newsData!.articles[i].title ?? '',
-                                    text2:
-                                        newsData!.articles[i].description ?? '',
+                                        state.newsData.articles[i].urlToImage ??
+                                            '',
+                                    text1:
+                                        state.newsData.articles[i].title ?? '',
+                                    text2: state
+                                            .newsData.articles[i].description ??
+                                        '',
                                     opacity: 0.9,
                                     fun: () {
                                       Navigator.push(
@@ -192,13 +197,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 NewsDetailScreen(
-                                                  article:
-                                                      newsData!.articles[i],
+                                                  article: state
+                                                      .newsData.articles[i],
                                                 )),
                                       );
                                     },
                                     textAuthor:
-                                        newsData!.articles[i].author ?? '',
+                                        state.newsData.articles[i].author ?? '',
                                   ),
                                 ),
                             ],
@@ -357,7 +362,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   )
                 ]),
-              ),
+              );
+            } else {
+              return const Center(
+                child: Text('Error State'),
+              );
+            }
+          },
+        ),
       ),
     );
   }
